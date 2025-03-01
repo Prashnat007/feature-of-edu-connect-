@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduConnect Features</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --primary-light: #6c85ff;
+            --primary-dark: #3a54cc;
+            --secondary-color: #f5f7ff;
+            --accent-color: #ff6b6b;
+            --text-color: #333;
+            --light-text: #666;
+            --card-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+
+        .features-container {
+            max-width: 1400px;
+            margin: 60px auto;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .features-container::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(var(--primary-light), transparent 70%);
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .features-heading {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .features-heading h2 {
+            font-size: 2.8rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .features-heading h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+
+        .features-heading p {
+            font-size: 1.2rem;
+            color: var(--light-text);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 20px;
+            padding-left: 45px;
+            border-radius: 30px;
+            border: 2px solid #ddd;
+            font-size: 1rem;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--light-text);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 35px 25px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover .feature-icon-wrapper {
+            background-color: var(--primary-light);
+            transform: scale(1.1);
+        }
+
+        .feature-icon {
+            font-size: 2.2rem;
+            transition: var(--transition);
+            color: var(--primary-color);
+        }
+
+        .feature-card:hover .feature-icon {
+            color: white;
+        }
+
+        .feature-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover .feature-title {
+            color: var(--primary-color);
+        }
+
+        .feature-description {
+            color: var(--light-text);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .feature-btn {
+            margin-top: auto;
+            padding: 8px 20px;
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            border-radius: 30px;
+            color: var(--primary-color);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .feature-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--accent-color);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .feature-stat {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        .feature-stat i {
+            margin-right: 5px;
+            color: var(--primary-color);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+            gap: 10px;
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .page-btn:hover, .page-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        .theme-toggle i {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        /* Dark mode support */
+        body.dark-mode {
+            --secondary-color: #1a1a2e;
+            --text-color: #f5f5f5;
+            --light-text: #cccccc;
+            --card-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        body.dark-mode .feature-card {
+            background: #242438;
+        }
+
+        body.dark-mode .search-input {
+            background: #242438;
+            border-color: #333;
+            color: #f5f5f5;
+        }
+
+        body.dark-mode .page-btn {
+            background: #242438;
+            border-color: #333;
+            color: #f5f5f5;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feature-card {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .feature-card:nth-child(2) { animation-delay: 0.1s; }
+        .feature-card:nth-child(3) { animation-delay: 0.2s; }
+        .feature-card:nth-child(4) { animation-delay: 0.3s; }
+        .feature-card:nth-child(5) { animation-delay: 0.4s; }
+        .feature-card:nth-child(6) { animation-delay: 0.5s; }
+        .feature-card:nth-child(7) { animation-delay: 0.6s; }
+        .feature-card:nth-child(8) { animation-delay: 0.7s; }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .features-heading h2 {
+                font-size: 2.2rem;
+            }
+            
+            .feature-card {
+                padding: 25px 20px;
+            }
+
+            .feature-icon-wrapper {
+                width: 70px;
+                height: 70px;
+            }
+
+            .filter-container {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding-bottom: 15px;
+                justify-content: flex-start;
+            }
+
+            .filter-btn {
+                flex: 0 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="features-container">
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <i class="fas fa-moon" id="theme-icon"></i>
+        </button>
+
+        <div class="features-heading">
+            <h2>Our Features</h2>
+            <p>Explore the comprehensive tools and resources designed to enhance your AI and Data Science learning journey at IIT Jodhpur</p>
+        </div>
+        
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterFeatures('all')">All</button>
+            <button class="filter-btn" onclick="filterFeatures('learning')">Learning</button>
+            <button class="filter-btn" onclick="filterFeatures('resources')">Resources</button>
+            <button class="filter-btn" onclick="filterFeatures('tools')">Tools</button>
+            <button class="filter-btn" onclick="filterFeatures('community')">Community</button>
+        </div>
+        
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" placeholder="Search features..." onkeyup="searchFeatures()">
+        </div>
+        
+        <div class="features-grid" id="features-grid">
+            <!-- Assignments -->
+            <a href="#assignments" class="feature-card" data-category="learning">
+                <div class="tag">Popular</div>
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-book feature-icon"></i>
+                </div>
+                <h3 class="feature-title">Assignments</h3>
+                <p class="feature-description">Get weekly AI & Data Science assignments with detailed solutions and expert feedback.</p>
+                <div class="feature-stat"><i class="fas fa-users"></i> 2,500+ students</div>
+                <button class="feature-btn">Explore</button>
+            </a>
+            
+            <!-- Live Sessions -->
+            <a href="#live-sessions" class="feature-card" data-category="learning">
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-video feature-icon"></i>
+                </div>
+                <h3 class="feature-title">Live Sessions</h3>
+                <p class="feature-description">Attend and access recordings of expert-led classes with summarized key points.</p>
+                <div class="feature-stat"><i class="fas fa-play-circle"></i> 200+ sessions</div>
+                <button class="feature-btn">Join</button>
+            </a>
+            
+            <!-- AI Tools -->
+            <a href="#ai-tools" class="feature-card" data-category="tools">
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-cogs feature-icon"></i>
+                </div>
+                <h3 class="feature-title">AI Tools</h3>
+                <p class="feature-description">Access handpicked tools and frameworks for AI & Data Science projects and research.</p>
+                <div class="feature-stat"><i class="fas fa-tools"></i> 50+ tools</div>
+                <button class="feature-btn">Discover</button>
+            </a>
+            
+            <!-- Events & Notices -->
+            <a href="#events" class="feature-card" data-category="community">
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-calendar-alt feature-icon"></i>
+                </div>
+                <h3 class="feature-title">Events & Notices</h3>
+                <p class="feature-description">Stay updated with upcoming IIT Jodhpur events, workshops and important announcements.</p>
+                <div class="feature-stat"><i class="fas fa-bell"></i> Updated daily</div>
+                <button class="feature-btn">Check</button>
+            </a>
+            
+            <!-- Teacher Resources -->
+            <a href="#teacher-resources" class="feature-card" data-category="resources">
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-chalkboard-teacher feature-icon"></i>
+                </div>
+                <h3 class="feature-title">Teacher Resources</h3>
+                <p class="feature-description">Access notes, study materials and lecture slides from top educators and professors.</p>
+                <div class="feature-stat"><i class="fas fa-file-alt"></i> 1,000+ documents</div>
+                <button class="feature-btn">Access</button>
+            </a>
+            
+            <!-- Project Showcase -->
+            <a href="#projects" class="feature-card" data-category="community">
+                <div class="tag">New</div>
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-project-diagram feature-icon"></i>
+                </div>
+                <h3 class="feature-title">Project Showcase</h3>
+                <p class="feature-description">Showcase your AI and Data Science projects and get feedback from peers and experts.</p>
+                <div class="feature-stat"><i class="fas fa-code-branch"></i> 300+ projects</div>
+                <button class="feature-btn">Submit</button>
+            </a>
+            
+            <!-- Study Groups -->
+            <a href="#study-groups" class="feature-card" data-category="community">
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-users feature-icon"></i>
+                </div>
+                <h3 class="feature-title">Study Groups</h3>
+                <p class="feature-description">Join or create study groups with fellow students to collaborate on assignments and projects.</p>
+                <div class="feature-stat"><i class="fas fa-user-friends"></i> 80+ active groups</div>
+                <button class="feature-btn">Join</button>
+            </a>
+            
+            <!-- Career Resources -->
+            <a href="#career" class="feature-card" data-category="resources">
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-briefcase feature-icon"></i>
+                </div>
+                <h3 class="feature-title">Career Resources</h3>
+                <p class="feature-description">Access job postings, internship opportunities, and career guidance in AI and Data Science.</p>
+                <div class="feature-stat"><i class="fas fa-building"></i> 150+ partners</div>
+                <button class="feature-btn">Explore</button>
+            </a>
+        </div>
+        
+        <div class="pagination">
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn"><i class="fas fa-ellipsis-h"></i></button>
+        </div>
+    </section>
+
+    <script>
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        }
+        
+        // Feature filtering
+        function filterFeatures(category) {
+            const cards = document.querySelectorAll('.feature-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            // Update active button
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase() === category || 
+                    (btn.textContent.toLowerCase() === 'all' && category === 'all')) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Filter cards
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        
+        // Search functionality
+        function searchFeatures() {
+            const searchInput = document.querySelector('.search-input');
+            const filter = searchInput.value.toLowerCase();
+            const cards = document.querySelectorAll('.feature-card');
+            
+            cards.forEach(card => {
+                const title = card.querySelector('.feature-title').textContent.toLowerCase();
+                const description = card.querySelector('.feature-description').textContent.toLowerCase();
+                
+                if (title.includes(filter) || description.includes(filter)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        
+        // Pagination (for demo purposes)
+        document.querySelectorAll('.page-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
